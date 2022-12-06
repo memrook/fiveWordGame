@@ -18,6 +18,7 @@ func main() {
 	if err != nil {
 		log.Panicln(err)
 	}
+
 	defer func(file *os.File) {
 		err = file.Close()
 		if err != nil {
@@ -45,7 +46,9 @@ func main() {
 
 	secretWord := words[randomNr]
 
-	log.Println(wordCount, randomNr, secretWord)
+	//log.Println(wordCount, randomNr, secretWord)
+	log.Printf("Правила игры просты:\nЯ загадываю слово из %d букв - вы отгадываете.\n"+
+		"В ответе: Буквы в верхнев регистре - угадали в правильном месте", wordLen)
 
 	var outputWord []string
 	var input string
