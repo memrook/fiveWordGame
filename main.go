@@ -91,7 +91,8 @@ func main() {
 		}
 		fmt.Printf("%v\t\t ❌  Исключенные символы:%v\n", outputWord, excludedChars)
 	}
-	fmt.Println("ВЫ ПОБЕДИЛИ!!!")
+	fmt.Println(colorLime(secretWord))
+	fmt.Println(colorLime("ВЫ ПОБЕДИЛИ!!!"))
 
 }
 
