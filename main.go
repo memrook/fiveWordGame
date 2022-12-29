@@ -51,7 +51,6 @@ func main() {
 
 	secretWord := words[randomNr]
 
-	//log.Println(wordCount, randomNr, secretWord)
 	fmt.Printf(colorLime("Правила игры просты:\nЯ загадываю слово из %d букв - вы отгадываете.\n"+
 		"В ответе:\n"+
 		"\t-буквы в верхнем регистре - угадали в правильном месте\n"+
@@ -60,6 +59,7 @@ func main() {
 	var outputWord []string
 	var excludedChars []string
 	var input string
+	var count = 1
 
 	for fmt.Scanf("%s\n", &input); input != secretWord; fmt.Scanf("%s\n", &input) {
 		input = strings.ToLower(input)
@@ -67,7 +67,7 @@ func main() {
 		secretRunes := []rune(secretWord)
 		outputWord = nil
 
-		fmt.Println("Вы ввели: ", string(inputRunes))
+		fmt.Printf("#%d Вы ввели: %s\n", count, string(inputRunes))
 
 		for i, inputChar := range inputRunes {
 			include := 0
@@ -89,10 +89,11 @@ func main() {
 				//excludedChars = append(excludedChars, colorBgYellow(string(inputChar)))
 			}
 		}
+		count++
 		fmt.Printf("%v\t\t ❌  Исключенные символы:%v\r\n", outputWord, excludedChars)
 	}
 	fmt.Println(colorLime(secretWord))
-	fmt.Println(colorLime("ВЫ ПОБЕДИЛИ!!!"))
+	fmt.Println(colorLime("ВЫ ПОБЕДИЛИ!!!\nКол-во попыток: "), count)
 
 }
 
