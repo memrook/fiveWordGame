@@ -61,13 +61,13 @@ func main() {
 	var excludedChars []string
 	var input string
 
-	for fmt.Scanf("%s", &input); input != secretWord; fmt.Scanf("%s", &input) {
+	for fmt.Scanf("%s\n", &input); input != secretWord; fmt.Scanf("%s\n", &input) {
 		input = strings.ToLower(input)
 		inputRunes := []rune(input)[:wordLen]
 		secretRunes := []rune(secretWord)
 		outputWord = nil
 
-		//fmt.Println("Вы ввели: ", string(inputRunes))
+		fmt.Println("Вы ввели: ", string(inputRunes))
 
 		for i, inputChar := range inputRunes {
 			include := 0
@@ -89,7 +89,7 @@ func main() {
 				//excludedChars = append(excludedChars, colorBgYellow(string(inputChar)))
 			}
 		}
-		fmt.Printf("%v\t\t ❌  Исключенные символы:%v\n", outputWord, excludedChars)
+		fmt.Printf("%v\t\t ❌  Исключенные символы:%v\r\n", outputWord, excludedChars)
 	}
 	fmt.Println(colorLime(secretWord))
 	fmt.Println(colorLime("ВЫ ПОБЕДИЛИ!!!"))
