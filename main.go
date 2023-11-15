@@ -46,8 +46,8 @@ func main() {
 	}
 
 	wordCount := len(words)
-	rand.Seed(time.Now().UnixNano())
-	randomNr := rand.Intn(wordCount)
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	randomNr := r.Intn(wordCount)
 
 	secretWord := words[randomNr]
 
@@ -61,13 +61,16 @@ func main() {
 	var input string
 	var count = 1
 
+	//writer := uilive.New()       // writer for the first line
+	//writer2 := writer.Newline()  // writer for the second line
+	//// start listening for updates and render
+	//writer.Start()
+
 	for fmt.Scanf("%s\n", &input); input != secretWord; fmt.Scanf("%s\n", &input) {
 		input = strings.ToLower(input)
 		inputRunes := []rune(input)[:wordLen]
 		secretRunes := []rune(secretWord)
 		outputWord = nil
-
-		fmt.Printf("#%d Вы ввели: %s\n", count, string(inputRunes))
 
 		for i, inputChar := range inputRunes {
 			include := 0
@@ -85,14 +88,20 @@ func main() {
 				outputWord = append(outputWord, colorYellow(string(inputChar)))
 			default:
 				outputWord = append(outputWord, "*")
-				excludedChars = appendIfNotExists(excludedChars, colorBgYellow(string(inputChar)))
-				//excludedChars = append(excludedChars, colorBgYellow(string(inputChar)))
+				excludedChars = appendIfNotExists(excludedChars, colorBgYellow(strings.ToUpper(string(inputChar))))
 			}
 		}
+		fmt.Printf("\r\033[k #%d\t%v\t ❌  Исключенные символы:%v\n", count, outputWord, excludedChars)
+
 		count++
-		fmt.Printf("%v\t\t ❌  Исключенные символы:%v\r\n", outputWord, excludedChars)
 	}
-	fmt.Println(colorLime(secretWord))
+
+	outputWord = []string{}
+	for _, v := range secretWord {
+		outputWord = append(outputWord, colorLime(strings.ToUpper(string(v))))
+	}
+
+	fmt.Printf("\r\033[k #%d\t%v\t ❌  Исключенные символы:%v\n", count, outputWord, excludedChars)
 	fmt.Println(colorLime("ВЫ ПОБЕДИЛИ!!!\nКол-во попыток: "), count)
 
 }
